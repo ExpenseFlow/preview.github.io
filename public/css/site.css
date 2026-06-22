@@ -25,7 +25,7 @@ html { scroll-behavior: smooth; }
 body { overflow-x: hidden; }
 
 /* ---------- Layout primitives ---------- */
-.wrap { max-width: var(--maxw); margin: 0 auto; padding-inline: var(--pad); width: 100%; }
+.wrap { max-width: var(--maxw); margin: 0 auto; padding-inline: var(--pad); width: 90%; }
 .wrap--narrow { max-width: 920px; }
 .section { padding-block: clamp(56px, 8vw, 112px); }
 .section--tight { padding-block: clamp(40px, 5vw, 72px); }
