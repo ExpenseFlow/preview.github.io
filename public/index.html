@@ -170,6 +170,20 @@
     .error.show {
       display: block;
     }
+
+    .countdown {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #e5e5e5;
+      font-size: 14px;
+      color: #888;
+      text-align: center;
+    }
+
+    .countdown strong {
+      color: #d4a574;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body>
@@ -190,6 +204,10 @@
       </div>
 
       <button class="btn-continue" id="continueBtn" disabled>Continue</button>
+
+      <div class="countdown" id="countdown" style="display: none;">
+        Auto-redirect in <strong id="countdownValue">5</strong> seconds
+      </div>
 
       <div class="loading" id="loading">
         <span class="spinner"></span>Detecting your location...
@@ -216,7 +234,10 @@
     };
 
     const DEFAULT_COUNTRY = 'CA';
+    const AUTO_REDIRECT_DELAY = 5;
     let selectedCountry = null;
+    let countdownTimer = null;
+    let countdownValue = AUTO_REDIRECT_DELAY;
 
     // Initialize
     async function init() {
@@ -255,6 +276,7 @@
 
       hideLoading();
       render();
+      startCountdown();
     }
 
     function hideLoading() {
@@ -265,6 +287,37 @@
       const errorEl = document.getElementById('error');
       errorEl.textContent = message;
       errorEl.classList.add('show');
+    }
+
+    function stopCountdown() {
+      if (countdownTimer) {
+        clearInterval(countdownTimer);
+        countdownTimer = null;
+      }
+      document.getElementById('countdown').style.display = 'none';
+    }
+
+    function startCountdown() {
+      countdownValue = AUTO_REDIRECT_DELAY;
+      document.getElementById('countdownValue').textContent = countdownValue;
+      document.getElementById('countdown').style.display = 'block';
+
+      countdownTimer = setInterval(() => {
+        countdownValue--;
+        document.getElementById('countdownValue').textContent = countdownValue;
+
+        if (countdownValue <= 0) {
+          stopCountdown();
+          redirect();
+        }
+      }, 1000);
+    }
+
+    function redirect() {
+      if (selectedCountry) {
+        localStorage.setItem('expenseflow_country', selectedCountry);
+        window.location.href = SUPPORTED_COUNTRIES[selectedCountry].url;
+      }
     }
 
     function render() {
@@ -290,15 +343,22 @@
     }
 
     function selectCountry(code) {
-      selectedCountry = code;
-      render();
+      // If clicking the already selected country, redirect immediately
+      if (code === selectedCountry) {
+        stopCountdown();
+        redirect();
+      } else {
+        // If selecting a different country, stop countdown and switch selection
+        stopCountdown();
+        selectedCountry = code;
+        render();
+        startCountdown();
+      }
     }
 
     document.getElementById('continueBtn').addEventListener('click', () => {
-      if (selectedCountry) {
-        localStorage.setItem('expenseflow_country', selectedCountry);
-        window.location.href = SUPPORTED_COUNTRIES[selectedCountry].url;
-      }
+      stopCountdown();
+      redirect();
     });
 
     // Start
