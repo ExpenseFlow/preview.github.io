@@ -74,8 +74,33 @@ body { overflow-x: hidden; }
 .section--ink .lede { color: var(--on-ink-dim); }
 .gold { color: var(--gold); }
 
-/* ---------- Buttons (extends .tulip-btn) ---------- */
-.tulip-btn--filled { background: var(--color-foreground); }
+/* ---------- Buttons ---------- */
+.tulip-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0.72rem 1.25rem;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  border: 1.5px solid transparent;
+  border-radius: var(--radius-box);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast),
+              border-color var(--t-fast), opacity var(--t-fast);
+  white-space: nowrap;
+}
+.tulip-btn:hover { opacity: 0.88; }
+.tulip-btn--outline {
+  border-color: var(--color-border);
+  color: var(--color-foreground);
+  background: transparent;
+}
+.tulip-btn--filled { background: var(--color-foreground); color: var(--color-on-primary); }
 .btn-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
 .btn-lg { padding: 0.95rem 1.6rem; font-size: 0.98rem; border-radius: var(--radius-box); }
 
@@ -89,11 +114,13 @@ body { overflow-x: hidden; }
 }
 .on-ink .tulip-btn--filled:hover,
 .tulip-btn--gold:hover { opacity: 1; background: var(--gold-bright); border-color: var(--gold-bright); }
-.on-ink .tulip-btn--outline {
+.on-ink .tulip-btn--outline,
+.section--ink .tulip-btn--outline {
   border-color: var(--ink-line);
   color: var(--on-ink);
 }
-.on-ink .tulip-btn--outline:hover { background: rgb(255 255 255 / 0.07); }
+.on-ink .tulip-btn--outline:hover,
+.section--ink .tulip-btn--outline:hover { background: rgb(255 255 255 / 0.07); }
 
 .text-link {
   color: var(--color-foreground);
