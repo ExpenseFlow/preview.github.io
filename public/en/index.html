@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ExpenseFlow · Mileage + Receipts, Auto-Tracked</title>
-  <meta name="description" content="ExpenseFlow auto-tracks every mile by GPS and captures every receipt by camera — turning a day of driving into an audit-ready, CRA-compliant report with zero manual entry." />
+  <title>ExpenseFlow · Track Mileage & Receipts Worldwide</title>
+  <meta name="description" content="ExpenseFlow auto-tracks mileage by GPS and captures receipts by camera — works globally to turn a day of driving into a compliant expense report with zero manual entry." />
   <link rel="icon" type="image/png" href="../assets/app-icon-512.png" />
   <link rel="stylesheet" href="../css/colors_and_type.css" />
   <link rel="stylesheet" href="../css/site.css" />
@@ -26,7 +26,7 @@
         <a href="accountants.html">For accountants</a>
       </nav>
       <div class="nav-cta">
-        <a class="country-switch" href="../?select=1" title="Change country">🍁 CA</a>
+        <a class="country-switch" href="../?select=1" title="Change country">🌐 Other</a>
         <a class="ghost-link" href="https://get.expenseflow.app">Sign in</a>
         <a class="tulip-btn tulip-btn--gold" href="https://get.expenseflow.app">Start free</a>
       </div>
@@ -34,16 +34,22 @@
   </header>
 
   <main>
+    <!-- ===================== JURISDICTION NOTICE ===================== -->
+    <div class="jurisdiction-notice">
+      <span class="material-symbols-outlined">info</span>
+      <p>You're viewing <strong>Other Jurisdictions</strong>. GPS mileage tracking, receipt capture, and expense reports all work fully with this selection. Country-specific tax report formats (CRA, IRS) may not be available for your jurisdiction — you can still use the mobile app and web app. We're actively working to add more countries and jurisdictions.</p>
+    </div>
+
     <!-- ===================== HERO ===================== -->
     <section class="hero on-ink">
       <div class="wrap hero__inner">
         <div>
-          <p class="eyebrow">Canada-first · 2026 CRA rates</p>
+          <p class="eyebrow">Works everywhere · Track your rates</p>
           <h1 class="display h-xl">Stop leaving money on the asphalt.</h1>
-          <p class="lede">Every mile auto-logged by GPS. Every receipt captured by camera. ExpenseFlow turns a day of driving into one audit-ready report Finance accepts on the first submission — with zero manual entry.</p>
+          <p class="lede">Every mile auto-logged by GPS. Every receipt captured by camera. ExpenseFlow turns a day of driving into an expense-ready report your accountant accepts on the first submission — with zero manual entry.</p>
           <div class="btn-row hero__cta">
             <a class="tulip-btn tulip-btn--filled btn-lg" href="https://get.expenseflow.app">Start free — no account needed</a>
-            <a class="tulip-btn tulip-btn--outline btn-lg" href="calculator.html">See what the CRA owes you</a>
+            <a class="tulip-btn tulip-btn--outline btn-lg" href="calculator.html">Calculate your deductions</a>
           </div>
           <p class="hero__note"><span class="material-symbols-outlined">check_circle</span> No credit card. No sign-up. Try it with no obligation.</p>
         </div>
@@ -56,8 +62,8 @@
       </div>
       <div class="wrap"></div>
       <div class="stat-strip">
-        <div><div class="n">✓ CRA</div><div class="l">Compliant vehicle use reporting format</div></div>
-        <div><div class="n">100%</div><div class="l">Every kilometre captured, even on winding roads</div></div>
+        <div><div class="n">✓ Global</div><div class="l">Works with your local tax authority</div></div>
+        <div><div class="n">100%</div><div class="l">Every mile captured, even on winding roads</div></div>
         <div><div class="n">2 halves</div><div class="l">Trip + receipt in one compliant record</div></div>
         <div><div class="n">No obligation</div><div class="l">Try it before you commit to anything</div></div>
       </div>
@@ -128,7 +134,7 @@
           <div class="step">
             <div class="step__n">STEP 03</div>
             <h3>One report Finance accepts.</h3>
-            <p>Trip plus receipt become a single CRA-compliant record. Bulk-categorize on the desktop app, then export clean. Approved on first submission.</p>
+            <p>Trip plus receipt become a single compliant with your local tax authority record. Bulk-categorize on the desktop app, then export clean. Approved on first submission.</p>
           </div>
         </div>
       </div>
@@ -140,7 +146,7 @@
         <div class="section-head left reveal">
           <p class="eyebrow">Both halves of the job</p>
           <h2 class="display h-lg">Everything a field driver needs — and nothing they don't.</h2>
-          <p class="lede">MileIQ logs miles. Expensify chases receipts. ExpenseFlow does both, Canada-first, and keeps the proof airtight enough for your accountant.</p>
+          <p class="lede">MileIQ logs miles. Expensify chases receipts. ExpenseFlow does both, globally, and keeps the proof airtight enough for your accountant.</p>
         </div>
         <div class="feature-grid reveal">
           <div class="feat-card">
@@ -156,7 +162,7 @@
           <div class="feat-card">
             <span class="ico"><span class="material-symbols-outlined">verified</span></span>
             <h3>Audit-ready in one record</h3>
-            <p>Trip + receipt = one CRA/IRS-compliant entry that exports clean. The kind of log that gets approved on the first try.</p>
+            <p>Trip + receipt = one compliant entry that exports clean. The kind of log that gets approved on the first try.</p>
           </div>
           <div class="feat-card">
             <span class="ico"><span class="material-symbols-outlined">straighten</span></span>
@@ -263,7 +269,7 @@
                 <td class="col-us val-yes"><span class="material-symbols-outlined">check</span></td>
               </tr>
               <tr>
-                <td>CRA-compliant export</td>
+                <td>compliant with your local tax authority export</td>
                 <td class="val-no"><span class="material-symbols-outlined">close</span></td>
                 <td class="val-no"><span class="material-symbols-outlined">close</span></td>
                 <td class="col-us cell-strong">Vehicle use record certified</td>
@@ -297,7 +303,7 @@
               <div class="calc__result">
                 <div class="rlab">Your annual CRA-deductible mileage is worth</div>
                 <div class="ramt" id="teaserAmt">$11,388</div>
-                <div class="rsub">at the 2026 CRA rate. Track it compliantly and claim it all.</div>
+                <div class="rsub">at the 2026 local rate. Track it compliantly and claim it all.</div>
               </div>
             </div>
           </div>
@@ -367,8 +373,8 @@
       <div class="wrap">
         <div class="section-head center reveal">
           <p class="eyebrow center-line">Pricing</p>
-          <h2 class="display h-lg">CRA-compliant reporting for less than your daily coffee.</h2>
-          <p class="lede">Pro is $7/month. At the 2026 CRA rate of $0.73/km, that's covered by just 17 work kilometres. Proper reporting that's worth it.</p>
+          <h2 class="display h-lg">compliant with your local tax authority reporting for less than your daily coffee.</h2>
+          <p class="lede">Pro is $7/month. At the 2026 local rate of $0.73/km, that's covered by just 17 work kilometres. Proper reporting that's worth it.</p>
         </div>
         <div class="price-grid reveal">
           <div class="price-card">
@@ -483,7 +489,7 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <a class="brand" href="index.html"><img src="../assets/app-icon-512.png" alt="" /><b>ExpenseFlow</b></a>
-          <p>Auto-tracked mileage and receipts, turned into CRA-compliant vehicle use records. Built in Canada for audit-ready reporting.</p>
+          <p>Auto-tracked mileage and receipts, turned into expense-ready reports. Built for expense tracking worldwide.</p>
         </div>
         <div class="footer-col">
           <h4>Product</h4>
@@ -507,7 +513,7 @@
       </div>
       <div class="footer-bottom">
         <span>© 2026 <a href="https://aryabhatta.ca" target="_blank" rel="noopener">Aryabhatta Labs Ltd</a>. All rights reserved.</span>
-        <span>Made in Canada</span>
+        <span>Made for the world</span>
       </div>
     </div>
   </footer>

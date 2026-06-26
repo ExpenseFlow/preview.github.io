@@ -177,6 +177,24 @@ body { overflow-x: hidden; }
 .nav-cta { margin-left: auto; display: flex; align-items: center; gap: 12px; }
 .nav-cta .ghost-link { color: var(--on-ink-dim); text-decoration: none; font-size: 15px; font-weight: 500; }
 .nav-cta .ghost-link:hover { color: var(--on-ink); }
+.country-switch {
+  padding: 8px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  background: transparent;
+  border: 1px solid var(--ink-line);
+  border-radius: 6px;
+  color: var(--on-ink);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+.country-switch:hover {
+  border-color: var(--gold);
+  background: var(--gold-subtle, rgba(199, 162, 78, 0.08));
+}
 .nav-toggle { display: none; }
 
 @media (max-width: 880px) {
@@ -594,3 +612,29 @@ input[type="range"].calc-range::-moz-range-thumb {
 .form-feedback { padding: 14px 18px; border-radius: 6px; font-size: .9375rem; }
 .form-feedback--success { background: rgb(240 253 244); border: 1px solid rgb(134 239 172); color: rgb(22 101 52); }
 .form-feedback--error   { background: rgb(255 241 241); border: 1px solid rgb(252 165 165); color: rgb(153 27 27); }
+
+/* =====================================================================
+   JURISDICTION NOTICE — for "en" locales
+   ===================================================================== */
+.jurisdiction-notice {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: rgba(199, 162, 78, 0.1);
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 16px auto 0;
+  max-width: var(--maxw, 1180px);
+}
+.jurisdiction-notice .material-symbols-outlined {
+  color: var(--gold);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.jurisdiction-notice p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-foreground);
+  margin: 0;
+}

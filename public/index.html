@@ -199,18 +199,18 @@
       <h1>Welcome to ExpenseFlow</h1>
       <p class="subtitle">Select your country to get started</p>
 
-      <div class="country-grid" id="countryGrid">
+      <div class="loading" id="loading">
+        <span class="spinner"></span>Detecting your location...
+      </div>
+
+      <div class="country-grid" id="countryGrid" style="display: none;">
         <!-- Will be populated by JavaScript -->
       </div>
 
-      <button class="btn-continue" id="continueBtn" disabled>Continue</button>
+      <button class="btn-continue" id="continueBtn" style="display: none;">Continue</button>
 
       <div class="countdown" id="countdown" style="display: none;">
         Auto-redirect in <strong id="countdownValue">5</strong> seconds
-      </div>
-
-      <div class="loading" id="loading">
-        <span class="spinner"></span>Detecting your location...
       </div>
 
       <div class="error" id="error"></div>
@@ -231,135 +231,98 @@
         url: './us-en/',
         tax: 'IRS',
       },
+      en: {
+        name: 'Other Jurisdictions',
+        flag: '🌐',
+        url: './en/',
+        tax: null,
+      },
     };
 
-    const DEFAULT_COUNTRY = 'CA';
-    const AUTO_REDIRECT_DELAY = 5;
+    const showSelector = new URLSearchParams(location.search).get('select') === '1';
     let selectedCountry = null;
-    let countdownTimer = null;
-    let countdownValue = AUTO_REDIRECT_DELAY;
 
-    // Initialize
     async function init() {
-      // Check localStorage first
-      const saved = localStorage.getItem('expenseflow_country');
-      if (saved && SUPPORTED_COUNTRIES[saved]) {
-        selectedCountry = saved;
-        hideLoading();
-        render();
-        return;
-      }
-
-      // Try to detect country from IP
-      try {
-        const response = await fetch('https://ipapi.co/json/', {
-          method: 'GET',
-          headers: { 'Accept': 'application/json' }
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          const detectedCountry = data.country_code;
-
-          if (SUPPORTED_COUNTRIES[detectedCountry]) {
-            selectedCountry = detectedCountry;
-          } else {
-            selectedCountry = DEFAULT_COUNTRY;
-          }
+      if (showSelector) {
+        // Mode B: Country selector modal
+        const saved = localStorage.getItem('expenseflow_country');
+        if (saved && SUPPORTED_COUNTRIES[saved]) {
+          selectedCountry = saved;
         } else {
-          selectedCountry = DEFAULT_COUNTRY;
+          selectedCountry = 'CA'; // default if nothing saved
         }
-      } catch (error) {
-        console.error('Geolocation detection failed:', error);
-        selectedCountry = DEFAULT_COUNTRY;
-      }
-
-      hideLoading();
-      render();
-      startCountdown();
-    }
-
-    function hideLoading() {
-      document.getElementById('loading').style.display = 'none';
-    }
-
-    function showError(message) {
-      const errorEl = document.getElementById('error');
-      errorEl.textContent = message;
-      errorEl.classList.add('show');
-    }
-
-    function stopCountdown() {
-      if (countdownTimer) {
-        clearInterval(countdownTimer);
-        countdownTimer = null;
-      }
-      document.getElementById('countdown').style.display = 'none';
-    }
-
-    function startCountdown() {
-      countdownValue = AUTO_REDIRECT_DELAY;
-      document.getElementById('countdownValue').textContent = countdownValue;
-      document.getElementById('countdown').style.display = 'block';
-
-      countdownTimer = setInterval(() => {
-        countdownValue--;
-        document.getElementById('countdownValue').textContent = countdownValue;
-
-        if (countdownValue <= 0) {
-          stopCountdown();
-          redirect();
+        renderModal();
+      } else {
+        // Mode A: Auto-redirect
+        const saved = localStorage.getItem('expenseflow_country');
+        if (saved && SUPPORTED_COUNTRIES[saved]) {
+          redirect(saved);
+          return;
         }
-      }, 1000);
-    }
 
-    function redirect() {
-      if (selectedCountry) {
-        localStorage.setItem('expenseflow_country', selectedCountry);
-        window.location.href = SUPPORTED_COUNTRIES[selectedCountry].url;
+        // Try to detect country from IP
+        try {
+          const response = await fetch('https://ipapi.co/json/', {
+            method: 'GET',
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            const detectedCountry = data.country_code;
+
+            if (SUPPORTED_COUNTRIES[detectedCountry]) {
+              redirect(detectedCountry);
+            } else {
+              redirect('en');
+            }
+          } else {
+            redirect('en');
+          }
+        } catch (error) {
+          console.error('Geolocation detection failed:', error);
+          redirect('en');
+        }
       }
     }
 
-    function render() {
+    function renderModal() {
       const grid = document.getElementById('countryGrid');
       grid.innerHTML = '';
 
       Object.entries(SUPPORTED_COUNTRIES).forEach(([code, country]) => {
         const option = document.createElement('div');
         option.className = 'country-option' + (code === selectedCountry ? ' selected' : '');
-        option.innerHTML = `
+        let html = `
           <div>
             <span class="flag">${country.flag}</span>
             <strong>${country.name}</strong>
-          </div>
-          <div class="country-info">Tax authority: ${country.tax}</div>
-        `;
+          </div>`;
+        if (country.tax) {
+          html += `<div class="country-info">Tax authority: ${country.tax}</div>`;
+        }
+        option.innerHTML = html;
         option.addEventListener('click', () => selectCountry(code));
         grid.appendChild(option);
       });
 
-      // Enable continue button
-      document.getElementById('continueBtn').disabled = false;
+      // Show modal, hide loading and spinner
+      document.getElementById('countryGrid').parentElement.style.display = 'block';
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('continueBtn').style.display = 'none';
+      document.getElementById('countdown').style.display = 'none';
     }
 
     function selectCountry(code) {
-      // If clicking the already selected country, redirect immediately
-      if (code === selectedCountry) {
-        stopCountdown();
-        redirect();
-      } else {
-        // If selecting a different country, stop countdown and switch selection
-        stopCountdown();
-        selectedCountry = code;
-        render();
-        startCountdown();
-      }
+      redirect(code);
     }
 
-    document.getElementById('continueBtn').addEventListener('click', () => {
-      stopCountdown();
-      redirect();
-    });
+    function redirect(code) {
+      if (SUPPORTED_COUNTRIES[code]) {
+        localStorage.setItem('expenseflow_country', code);
+        window.location.href = SUPPORTED_COUNTRIES[code].url;
+      }
+    }
 
     // Start
     init();
