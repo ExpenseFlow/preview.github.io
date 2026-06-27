@@ -1,5 +1,12 @@
 # Project Guidelines
 
+## Jurisdiction-Specific Content
+
+### US Website (us-en/)
+- **Do NOT include "Made in Canada" messaging** in footers or branding copy for us-en pages
+- This is intentional — US-targeted content should not highlight Canadian origin
+- CA and other jurisdiction pages should include "Made in Canada" language
+
 ## Launch/Serve
 
 When requested to launch, serve or run the application:
